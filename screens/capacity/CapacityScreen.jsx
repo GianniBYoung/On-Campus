@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import * as Progress from 'react-native-progress';
 const gym = require('./data/gymTimes.json');
 const caf = require('./data/cafTimes.json');
@@ -116,56 +116,70 @@ export default function CapacityScreen() {
     }
 
   };
-
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: StatusBar.currentHeight,
+    },
+    scrollView: {
+      backgroundColor: 'white',
+      marginHorizontal: 5,
+    },
+    text: {
+      fontSize: 42,
+    },
+  });
   return (
-    <View>
-      <Text>This is Capacity screen</Text>
-      <Text>Gym Capacity</Text>
-      <Progress.Bar progress={getProgress('gym')} />
-      <BarChart
-        style={{
-          marginVertical: 8,
-        }}
-        data={generateDataForBarChart('gym')}
-        width={screenWidth}
-        height={220}
-        yAxisSuffix="%"
-        fromZero={true}
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text>This is Capacity screen</Text>
+        <Text>Gym Capacity</Text>
+        <Progress.Bar progress={getProgress('gym')} />
+        <BarChart
+          style={{
+            marginVertical: 8,
+          }}
+          data={generateDataForBarChart('gym')}
+          width={screenWidth}
+          height={220}
+          yAxisSuffix="%"
+          fromZero={true}
 
-        chartConfig={chartConfig}
-        verticalLabelRotation={30}
-      />
-      <Text>Cafeteria Capacity</Text>
-      <Progress.Bar progress={getProgress('caf')} />
-      <BarChart
-        style={{
-          marginVertical: 8,
-        }}
-        data={generateDataForBarChart('caf')}
-        width={screenWidth}
-        height={220}
-        yAxisSuffix="%"
-        fromZero={true}
+          chartConfig={chartConfig}
+          verticalLabelRotation={30}
+        />
+        <Text>Cafeteria Capacity</Text>
+        <Progress.Bar progress={getProgress('caf')} />
+        <BarChart
+          style={{
+            marginVertical: 8,
+          }}
+          data={generateDataForBarChart('caf')}
+          width={screenWidth}
+          height={220}
+          yAxisSuffix="%"
+          fromZero={true}
 
-        chartConfig={chartConfig}
-        verticalLabelRotation={30}
-      />
-      <Text>Parking Lot Capacity</Text>
-      <Progress.Bar progress={getProgress('lot')} />
-      <BarChart
-        style={{
-          marginVertical: 8,
-        }}
-        data={generateDataForBarChart('lot')}
-        width={screenWidth}
-        height={220}
-        yAxisSuffix="%"
-        fromZero={true}
+          chartConfig={chartConfig}
+          verticalLabelRotation={30}
+        />
+        <Text>Parking Lot Capacity</Text>
+        <Progress.Bar progress={getProgress('lot')} />
+        <BarChart
+          style={{
+            marginVertical: 8,
+          }}
+          data={generateDataForBarChart('lot')}
+          width={screenWidth}
+          height={220}
+          yAxisSuffix="%"
+          fromZero={true}
 
-        chartConfig={chartConfig}
-        verticalLabelRotation={30}
-      />
-    </View>
-
+          chartConfig={chartConfig}
+          verticalLabelRotation={30}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
+
 }
