@@ -1,5 +1,5 @@
 {
-    "maxCapacity": 250,
+    "maxCapacity": 80,
     "peopleAtTimes": [
         {
             "weekdays": [
