@@ -16,7 +16,6 @@ function getProgress(location) {
       dataset = lot;
       break;
     case 'caf':
-      console.log('caf');
       dataset = caf;
       break;
     default:
