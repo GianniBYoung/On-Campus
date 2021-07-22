@@ -92,6 +92,7 @@ function generateDataForBarChart(location) {
 }
 export default function CapacityScreen() {
 
+  // Doane Orang is #FFA74C
   const chartConfig = {
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#fb8c00",
@@ -133,7 +134,8 @@ export default function CapacityScreen() {
       <ScrollView style={styles.scrollView}>
         <Text>This is Capacity screen</Text>
         <Text>Gym Capacity</Text>
-        <Progress.Bar progress={getProgress('gym')} />
+        <Progress.Bar progress={getProgress('gym')} width={screenWidth - 10}
+          color={'rgba(255, 167, 76, 1)'} />
         <BarChart
           style={{
             marginVertical: 8,
@@ -148,7 +150,8 @@ export default function CapacityScreen() {
           verticalLabelRotation={30}
         />
         <Text>Cafeteria Capacity</Text>
-        <Progress.Bar progress={getProgress('caf')} />
+        <Progress.Bar progress={getProgress('caf')} width={screenWidth - 10}
+          color={'rgba(255, 167, 76, 1)'} />
         <BarChart
           style={{
             marginVertical: 8,
@@ -163,7 +166,8 @@ export default function CapacityScreen() {
           verticalLabelRotation={30}
         />
         <Text>Parking Lot Capacity</Text>
-        <Progress.Bar progress={getProgress('lot')} />
+        <Progress.Bar progress={getProgress('lot')} width={screenWidth - 10}
+          color={'rgba(255, 167, 76, 1)'} />
         <BarChart
           style={{
             marginVertical: 8,
