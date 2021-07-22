@@ -119,8 +119,32 @@ export default function CapacityScreen() {
       />
       <Text>Cafeteria Capacity</Text>
       <Progress.Bar progress={getProgress('caf')} />
+      <BarChart
+        style={{
+          marginVertical: 8,
+        }}
+        data={generateDataForBarChart('caf')}
+        width={screenWidth}
+        height={220}
+        yAxisSuffix="%"
+
+        chartConfig={chartConfig}
+        verticalLabelRotation={30}
+      />
       <Text>Parking Lot Capacity</Text>
       <Progress.Bar progress={getProgress('lot')} />
+      <BarChart
+        style={{
+          marginVertical: 8,
+        }}
+        data={generateDataForBarChart('lot')}
+        width={screenWidth}
+        height={220}
+        yAxisSuffix="%"
+
+        chartConfig={chartConfig}
+        verticalLabelRotation={30}
+      />
     </View>
 
   );
