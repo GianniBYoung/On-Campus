@@ -1,4 +1,5 @@
 {
+    "_comment": "the capacity refers to total people allowed and the number associated with times is the people there at the given time",
     "maxCapacity": 120,
     "peopleAtTimes": [
         {

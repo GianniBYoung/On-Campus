@@ -1,5 +1,5 @@
 {
-    "_comment": "the capacity and numbers refers to spaces and spaces filled",
+    "_comment": "the capacity refers to total spaces and the number associated with times is the number filled",
     "maxCapacity": 300,
     "peopleAtTimes": [
         {
