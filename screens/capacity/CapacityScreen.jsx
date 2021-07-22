@@ -62,7 +62,7 @@ function generateDataForBarChart(location) {
 
     for (var hour of dataset.peopleAtTimes[0].weekdays) {
       let currentHour24Format = (count.toString() + "00").padStart(4, '0');
-      labelValues.push(currentHour24Format);
+      labelValues.push(currentHour24Format.substr(0, 2));
       dataValues.push((hour[currentHour24Format] / dataset.maxCapacity) * 100);
 
       count += 1;
@@ -70,7 +70,7 @@ function generateDataForBarChart(location) {
   } else {
     for (var hour of dataset.peopleAtTimes[0].weekends) {
       let currentHour24Format = (count.toString() + "00").padStart(4, '0');
-      labelValues.push(currentHour24Format);
+      labelValues.push(currentHour24Format.substr(0, 2));
       dataValues.push((hour[currentHour24Format] / dataset.maxCapacity) * 100);
       count += 1;
     }
@@ -88,15 +88,18 @@ function generateDataForBarChart(location) {
 }
 export default function CapacityScreen() {
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
+    backgroundColor: "#e26a00",
+    backgroundGradientFrom: "#fb8c00",
+    backgroundGradientTo: "#ffa726",
+    backgroundGradientToOpacity: .6,
+    decimalPlaces: 0, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
+    strokeWidth: 1, // optional, default 3
+    barPercentage: 0.1,
+    useShadowColorFromDataset: false,// optional
+
   };
+
   return (
     <View>
       <Text>This is Capacity screen</Text>
@@ -105,12 +108,12 @@ export default function CapacityScreen() {
       <BarChart
         style={{
           marginVertical: 8,
-          borderRadius: 16
         }}
         data={generateDataForBarChart('gym')}
         width={screenWidth}
         height={220}
-        yAxisLabel=""
+        yAxisSuffix="%"
+
         chartConfig={chartConfig}
         verticalLabelRotation={30}
       />
