@@ -73,7 +73,6 @@ function generateDataForBarChart(location) {
         labelValues.push(currentHour24Format.substr(0, 2));
       }
       dataValues.push((dataset.peopleAtTimes[0].weekdays[i + time.getHours()][currentHour24Format] / dataset.maxCapacity) * 100);
-      datapoints = dataValues.map((datapoint) => datapoint - minValue - 1);
 
     }
   } else {
@@ -83,18 +82,16 @@ function generateDataForBarChart(location) {
         labelValues.push(currentHour24Format.substr(0, 2));
       }
       dataValues.push((dataset.peopleAtTimes[0].weekends[i + time.getHours()][currentHour24Format] / dataset.maxCapacity) * 100);
-
     }
-    datapoints = dataValues.map((datapoint) => datapoint - minValue - 1);
-
   }
-
+  dataValues.push(100);
+  labelValues.push('Max')
   const data = {
     labels: labelValues,
     datasets: [
 
       {
-        data: datapoints,
+        data: dataValues,
       }]
   };
   return data;
