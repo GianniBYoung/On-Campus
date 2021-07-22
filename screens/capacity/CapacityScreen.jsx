@@ -135,7 +135,7 @@ export default function CapacityScreen() {
         <Text>This is Capacity screen</Text>
         <Text>Gym Capacity</Text>
         <Progress.Bar progress={getProgress('gym')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} />
+          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} />
         <BarChart
           style={{
             marginVertical: 8,
@@ -151,7 +151,7 @@ export default function CapacityScreen() {
         />
         <Text>Cafeteria Capacity</Text>
         <Progress.Bar progress={getProgress('caf')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} />
+          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} />
         <BarChart
           style={{
             marginVertical: 8,
@@ -167,7 +167,7 @@ export default function CapacityScreen() {
         />
         <Text>Parking Lot Capacity</Text>
         <Progress.Bar progress={getProgress('lot')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} />
+          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} />
         <BarChart
           style={{
             marginVertical: 8,
