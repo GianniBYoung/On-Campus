@@ -63,7 +63,6 @@ function generateDataForBarChart(location) {
     for (var i = 0; i < 4; i++) {
 
       let currentHour24Format = ((time.getHours() + i).toString() + "00").padStart(4, '0');
-      console.log(currentHour24Format);
       if (i > 0) {
         labelValues.push(currentHour24Format.substr(0, 2));
       }
