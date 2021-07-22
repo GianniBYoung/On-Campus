@@ -31,11 +31,9 @@ function getProgress(location) {
   if (time.getDay() >= 1 && time.getDay() < 6) {
     // It is a weekday
     let capacity = ((dataset.peopleAtTimes[0].weekdays[time.getHours()][time.getHours().toString() + "00"]) / dataset.maxCapacity);
-    console.log(`${location} at ${capacity} of capacity`)
     return capacity;
   } else {
     let capacity = ((dataset.peopleAtTimes[0].weekends[time.getHours()][time.getHours().toString() + "00"]) / dataset.maxCapacity);
-    console.log(`${location} at ${capacity} of capacity`)
     return capacity;
 
   }
@@ -65,19 +63,19 @@ function generateDataForBarChart(location) {
     for (var hour of dataset.peopleAtTimes[0].weekdays) {
       let currentHour24Format = (count.toString() + "00").padStart(4, '0');
       labelValues.push(currentHour24Format);
-      dataValues.push(hour[currentHour24Format]);
+      dataValues.push((hour[currentHour24Format] / dataset.maxCapacity) * 100);
+
       count += 1;
     }
   } else {
     for (var hour of dataset.peopleAtTimes[0].weekends) {
       let currentHour24Format = (count.toString() + "00").padStart(4, '0');
       labelValues.push(currentHour24Format);
-      dataValues.push(hour[currentHour24Format]);
+      dataValues.push((hour[currentHour24Format] / dataset.maxCapacity) * 100);
       count += 1;
     }
   }
 
-  console.log(dataValues);
   const data = {
     labels: labelValues,
     datasets: [
@@ -112,7 +110,7 @@ export default function CapacityScreen() {
         data={generateDataForBarChart('gym')}
         width={screenWidth}
         height={220}
-        yAxisLabel="$"
+        yAxisLabel=""
         chartConfig={chartConfig}
         verticalLabelRotation={30}
       />
