@@ -11,12 +11,7 @@ const screenWidth = Dimensions.get("window").width;
 import {
   BarChart
 } from "react-native-chart-kit";
-const minValue = 0;
-const maxValue = 100;
 
-function* yLabel() {
-  yield* [minValue, '', maxValue];
-}
 function getProgress(location) {
   var time = new Date();
   let dataset = gym;
@@ -97,7 +92,6 @@ function generateDataForBarChart(location) {
   return data;
 }
 export default function CapacityScreen() {
-  const yLabelIterator = yLabel();
 
   const chartConfig = {
     backgroundColor: "#e26a00",
