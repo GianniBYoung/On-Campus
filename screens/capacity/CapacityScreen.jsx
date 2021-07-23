@@ -110,12 +110,10 @@ function getCapacityMessage(capacity) {
   }
 }
 export default function CapacityScreen() {
-
-  // Doane Orang is #FFA74C
   const chartConfig = {
     backgroundColor: "#e26a00",
-    backgroundGradientFrom: "#fb8c00",
-    backgroundGradientTo: "#ffa726",
+    backgroundGradientFrom: "#5A9B00",
+    backgroundGradientTo: "#8dce19",
     backgroundGradientToOpacity: .6,
     fillShadowGradient: '#ffffff',
     fillShadowGradientOpacity: 1,
@@ -131,9 +129,11 @@ export default function CapacityScreen() {
     container: {
       flex: 1,
       paddingTop: StatusBar.currentHeight,
+      backgroundColor: '#337ab7',
+
     },
     scrollView: {
-      backgroundColor: 'white',
+      backgroundColor: '#337ab7',
       marginHorizontal: 5,
 
     },
@@ -142,14 +142,16 @@ export default function CapacityScreen() {
     },
     titleText: {
       fontSize: 20,
-      fontWeight: "bold"
+      fontWeight: "bold", color: "#ffffff",
+      textAlign: "center",
+      margin: 5
     },
     collapsibleTitleText: {
       fontSize: 18,
       color: "#000000"
     },
     collapseHeader: {
-      backgroundColor: "#f09624",
+      backgroundColor: "#8dce19",
 
     },
     collapseBody: {
@@ -162,17 +164,25 @@ export default function CapacityScreen() {
       marginBottom: 5,
       height: 10,
       marginHorizontal: 20
+    }, locationDescriptionText: {
+      padding: 5,
+      paddingBottom: 0,
+      textAlign: "center"
+    }, graphDescriptionText: {
+      padding: 5,
+      textAlign: "center",
+      paddingTop: 0
     }
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <Text style={styles.titleText} >
-          Business of buildings around campus      </Text>
+          Current Capacities Of Buildings On Campus</Text>
         <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity {roundToMult5(Math.round(getProgress('gym') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
-            <Text>The Gym is {getCapacityMessage(getProgress('gym'))}</Text>
-            <ProgressBar style={styles.progressBar} progress={getProgress('gym')} color={Colors.orange500} />
+            <Text style={styles.locationDescriptionText}>The Gym is {getCapacityMessage(getProgress('gym'))}</Text>
+            <ProgressBar style={styles.progressBar} progress={getProgress('gym')} color={Colors.green700} />
             <BarChart
               style={{
                 marginVertical: 8,
@@ -185,15 +195,14 @@ export default function CapacityScreen() {
               chartConfig={chartConfig}
               verticalLabelRotation={30}
             />
-            <Text>Above is the percentage full for the Gym both now and the expectation over the next four hours.</Text>
+            <Text style={styles.graphDescriptionText}>Percent of max capacity being used now(actual) and expected over the next four hours.</Text>
           </View>
         </CollapsibleView>
         <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity {roundToMult5(Math.round(getProgress('caf') * 100))}%</Text>}>
-
           <View style={styles.collapseBody}>
-            <Text>The Cafeteria is {getCapacityMessage(getProgress('caf'))}</Text>
+            <Text style={styles.locationDescriptionText}>The Cafeteria is {getCapacityMessage(getProgress('caf'))}</Text>
 
-            <ProgressBar style={styles.progressBar} progress={getProgress('caf')} color={Colors.orange500} />
+            <ProgressBar style={styles.progressBar} progress={getProgress('caf')} color={Colors.green700} />
 
             <BarChart
               style={{
@@ -208,15 +217,13 @@ export default function CapacityScreen() {
               chartConfig={chartConfig}
               verticalLabelRotation={30}
             />
-            <Text>Above is the percentage full for the Cafeteria both now and the expectation over the next four hours.</Text>
+            <Text style={styles.graphDescriptionText}>Percent of max capacity being used now(actual) and expected over the next four hours.</Text>
           </View>
         </CollapsibleView>
-        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity {roundToMult5(Math.round(getProgress('lot') * 100))}%</Text>}>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Usage {roundToMult5(Math.round(getProgress('lot') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
-            <Text>The Parking Lot is {getCapacityMessage(getProgress('lot'))}</Text>
-
-            <ProgressBar style={styles.progressBar} progress={getProgress('lot')} color={Colors.orange500} />
-
+            <Text style={styles.locationDescriptionText}>The Parking Lot is {getCapacityMessage(getProgress('lot'))}</Text>
+            <ProgressBar style={styles.progressBar} progress={getProgress('lot')} color={Colors.green700} />
             <BarChart
               style={{
                 marginVertical: 8,
@@ -226,12 +233,10 @@ export default function CapacityScreen() {
               height={220}
               yAxisSuffix="%"
               fromZero={true}
-
               chartConfig={chartConfig}
               verticalLabelRotation={30}
             />
-
-            <Text>Above is the percentage of parking spots filled now and the expected amount over the next four hours.</Text>
+            <Text style={styles.graphDescriptionText}>Percent of total parking spaces being used now(actual) and expected over the next four hours.</Text>
           </View>
         </CollapsibleView>
       </ScrollView>
