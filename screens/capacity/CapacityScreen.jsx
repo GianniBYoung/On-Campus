@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 const gym = require('./data/gymTimes.json');
 const caf = require('./data/cafTimes.json');
@@ -62,7 +62,7 @@ function generateDataForBarChart(location) {
   let dataValues = [];
   let datapoints = [];
   if (time.getDay() >= 1 && time.getDay() < 6) {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
 
       let currentHour24Format = ((time.getHours() + i).toString() + "00").padStart(4, '0');
       if (i > 0) {
@@ -72,7 +72,7 @@ function generateDataForBarChart(location) {
 
     }
   } else {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
       let currentHour24Format = ((time.getHours() + i).toString() + "00").padStart(4, '0');
       if (i > 0) {
         labelValues.push(currentHour24Format.substr(0, 2));
@@ -118,60 +118,88 @@ export default function CapacityScreen() {
     scrollView: {
       backgroundColor: 'white',
       marginHorizontal: 5,
+
     },
     text: {
       fontSize: 42,
     },
+    titleText: {
+      fontSize: 20,
+      fontWeight: "bold"
+    },
+    collapsibleTitleText: {
+      fontSize: 18,
+      color: "#000000"
+    },
+    collapseHeader: {
+      backgroundColor: "#f09624",
+
+    },
+    collapseBody: {
+      backgroundColor: "#fff",
+      paddingTop: 0,
+      marginTop: 0
+    }
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text>This is Capacity screen</Text>
-        <CollapsibleView title="Gym Capacity">
-          <BarChart
-            style={{
-              marginVertical: 8,
-            }}
-            data={generateDataForBarChart('gym')}
-            width={screenWidth}
-            height={220}
-            yAxisSuffix="%"
-            fromZero={true}
-
-            chartConfig={chartConfig}
-            verticalLabelRotation={30}
-          />
+        <Text style={styles.titleText} >
+          Business of buildings around campus      </Text>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity</Text>}>
+          <View style={styles.collapseBody}>
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('gym')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+            <Text>Above is the percentage full for the Gym both now and the expectation over the next four hours.</Text>
+          </View>
         </CollapsibleView>
-        <CollapsibleView title="Cafeteria Capacity">
-          <BarChart
-            style={{
-              marginVertical: 8,
-            }}
-            data={generateDataForBarChart('caf')}
-            width={screenWidth}
-            height={220}
-            yAxisSuffix="%"
-            fromZero={true}
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity</Text>}>
 
-            chartConfig={chartConfig}
-            verticalLabelRotation={30}
-          />
+          <View style={styles.collapseBody}>
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('caf')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
+
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+            <Text>Above is the percentage full for the Cafeteria both now and the expectation over the next four hours.</Text>
+          </View>
         </CollapsibleView>
-        <CollapsibleView title="Parking Lot Capacity">
-          <BarChart
-            style={{
-              marginVertical: 8,
-            }}
-            data={generateDataForBarChart('lot')}
-            width={screenWidth}
-            height={220}
-            yAxisSuffix="%"
-            fromZero={true}
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity</Text>}>
+          <View style={styles.collapseBody}>
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('lot')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
 
-            chartConfig={chartConfig}
-            verticalLabelRotation={30}
-          />
-          <Text>The above is the number of parking spots filled</Text>
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+
+            <Text>Above is the percentage of parking spots filled now and the expected amount over the next four hours.</Text>
+          </View>
         </CollapsibleView>
       </ScrollView>
     </SafeAreaView>
