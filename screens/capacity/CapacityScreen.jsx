@@ -96,7 +96,8 @@ function generateDataForBarChart(location) {
 function roundToMult5(x) {
   return Math.ceil(x / 5) * 5;
 }
-function getCapacityMessage(capacity) {
+
+function getCapacityMessageBuildings(capacity) {
   if (capacity <= .20) {
     return 'Nearly Empty';
   } else if (capacity <= .40) {
@@ -109,6 +110,21 @@ function getCapacityMessage(capacity) {
     return 'Crowded';
   }
 }
+
+function getCapacityMessageParking(capacity) {
+  if (capacity <= .20) {
+    return 'Empty';
+  } else if (capacity <= .40) {
+    return 'Nearly Empty';
+  } else if (capacity <= .60) {
+    return 'Half Capacity';
+  } else if (capacity <= .80) {
+    return 'Approaching Capacity';
+  } else {
+    return 'Full';
+  }
+}
+
 export default function CapacityScreen() {
 
   // Doane Orang is #FFA74C
@@ -171,7 +187,7 @@ export default function CapacityScreen() {
           Business of buildings around campus      </Text>
         <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity {roundToMult5(Math.round(getProgress('gym') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
-            <Text>The Gym is {getCapacityMessage(getProgress('gym'))}</Text>
+            <Text>The Gym is {getCapacityMessageBuildings(getProgress('gym'))}</Text>
             <ProgressBar style={styles.progressBar} progress={getProgress('gym')} color={Colors.orange500} />
             <BarChart
               style={{
@@ -191,7 +207,7 @@ export default function CapacityScreen() {
         <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity {roundToMult5(Math.round(getProgress('caf') * 100))}%</Text>}>
 
           <View style={styles.collapseBody}>
-            <Text>The Cafeteria is {getCapacityMessage(getProgress('caf'))}</Text>
+            <Text>The Cafeteria is {getCapacityMessageBuildings(getProgress('caf'))}</Text>
 
             <ProgressBar style={styles.progressBar} progress={getProgress('caf')} color={Colors.orange500} />
 
@@ -213,7 +229,7 @@ export default function CapacityScreen() {
         </CollapsibleView>
         <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity {roundToMult5(Math.round(getProgress('lot') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
-            <Text>The Parking Lot is {getCapacityMessage(getProgress('lot'))}</Text>
+            <Text>The Parking Lot is {getCapacityMessageParking(getProgress('lot'))}</Text>
 
             <ProgressBar style={styles.progressBar} progress={getProgress('lot')} color={Colors.orange500} />
 
