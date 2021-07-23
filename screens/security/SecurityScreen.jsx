@@ -139,7 +139,7 @@ export default function SecurityScreen({ navigation }) {
           >
             {emergencyModeOn
               ? "All the contacts below have been alerted! "
-              : "When press the sos button, all the contacts below will be alerted"}
+              : "When you press the sos button, all the contacts below will be alerted"}
           </Text>
           {contacts.map((contact) => (
             <EmergencyContactItem
