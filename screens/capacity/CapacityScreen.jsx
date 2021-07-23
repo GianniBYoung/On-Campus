@@ -38,6 +38,7 @@ export default function CapacityScreen() {
   return (
     <View>
       <Text>This is Capacity screen</Text>
+
       <Text>Gym Capacity</Text>
       <Progress.Bar progress={getProgress('gym')} />
       <Text>Cafeteria Capacity</Text>
@@ -45,6 +46,5 @@ export default function CapacityScreen() {
       <Text>Parking Lot Capacity</Text>
       <Progress.Bar progress={getProgress('lot')} />
     </View>
-
   );
 }
