@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  Dimensions,
   TouchableOpacity,
   View,
+  Button,
 } from "react-native";
 
 import EmergencyContactItem from "./components/EmergencyContactItem";
+import MapView, { Marker } from "react-native-maps";
 
 const contacts = [
   {
@@ -53,22 +56,97 @@ const contacts = [
   },
 ];
 
-export default function SecurityScreen() {
+export default function SecurityScreen({ navigation }) {
+  const [emergencyModeOn, setEmergencyModeOn] = useState(false);
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Security</Text>
-        <TouchableOpacity style={styles.securityButtonContainer}>
-          <Text style={styles.sosText}>SOS</Text>
-        </TouchableOpacity>
+        <Text
+          style={[styles.title, { color: emergencyModeOn ? "red" : "black" }]}
+        >
+          Security
+        </Text>
+        {emergencyModeOn ? (
+          <View style={styles.cancelButton}>
+            <Button
+              title="Cancel"
+              onPress={() => setEmergencyModeOn(false)}
+            ></Button>
+          </View>
+        ) : (
+          <View style={styles.backButton}>
+            <Button title="Back" onPress={() => navigation.pop()}></Button>
+          </View>
+        )}
 
-        <View style={styles.contactsContainer}>
-          <Text style={styles.contactMainTitle}>Your Emergency Contacts</Text>
-          <Text style={styles.contactMainSubtitle}>
-            When press the sos button, all the contacts below will be alert
+        <View style={styles.middleContainer}>
+          {emergencyModeOn ? (
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: 40.62305,
+                longitude: -96.94977,
+                latitudeDelta: 0.002,
+                longitudeDelta: 0.002,
+              }}
+            >
+              <Marker
+                coordinate={{ latitude: 40.62305, longitude: -96.94977 }}
+                pinColor="#3388ff"
+                title="You"
+              />
+              <Marker
+                coordinate={{ latitude: 40.62321, longitude: -96.94911 }}
+                title="Campus Police"
+              />
+              <Marker
+                coordinate={{ latitude: 40.62234, longitude: -96.94875 }}
+                title="Campus Police"
+              />
+            </MapView>
+          ) : (
+            <TouchableOpacity
+              style={styles.securityButtonContainer}
+              onPress={() => setEmergencyModeOn(true)}
+            >
+              <Text style={styles.sosText}>SOS</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        <View
+          style={{
+            ...styles.contactsContainer,
+            backgroundColor: emergencyModeOn ? "#cc2f2f" : "#f5f5f5",
+          }}
+        >
+          <Text
+            style={[
+              styles.contactMainTitle,
+              { color: emergencyModeOn ? "white" : "black" },
+            ]}
+          >
+            {emergencyModeOn
+              ? "Help is on the way!"
+              : "Your Emergency Contacts"}
+          </Text>
+          <Text
+            style={[
+              styles.contactMainSubtitle,
+              { color: emergencyModeOn ? "white" : "black" },
+            ]}
+          >
+            {emergencyModeOn
+              ? "All the contacts below have been alerted! "
+              : "When press the sos button, all the contacts below will be alerted"}
           </Text>
           {contacts.map((contact) => (
-            <EmergencyContactItem key={contacts.phone} contact={contact} />
+            <EmergencyContactItem
+              key={contact.name}
+              contact={contact}
+              emergencyModeOn={emergencyModeOn}
+            />
           ))}
         </View>
       </View>
@@ -81,8 +159,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-
     flexDirection: "column",
+  },
+  appBar: {
+    width: "100%",
+    flexDirection: "row",
+  },
+  appBarButton: {
+    fontSize: 20,
+    marginTop: 60,
+    color: "black",
   },
   title: {
     fontSize: 30,
@@ -90,7 +176,22 @@ const styles = StyleSheet.create({
     marginTop: 60,
     color: "black",
     fontWeight: "bold",
-    justifyContent: "flex-start",
+  },
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 15,
+  },
+  cancelButton: {
+    position: "absolute",
+    top: 60,
+    right: 15,
+  },
+
+  middleContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   securityButtonContainer: {
     width: 256,
@@ -107,11 +208,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+
   contactsContainer: {
     width: "100%",
-
     elevation: 30,
-    backgroundColor: "#f5f5f5",
+
     shadowOffset: { width: 0, height: 2 },
     shadowColor: "black",
     shadowOpacity: 1,
@@ -131,5 +232,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: "black",
     justifyContent: "flex-start",
+  },
+  map: {
+    width: "100%",
+    height: 256,
   },
 });

@@ -10,16 +10,34 @@ import {
 } from "react-native";
 import { Dimensions } from "react-native";
 
-export default function EmergencyContactItem({ contact }) {
+export default function EmergencyContactItem({ contact, emergencyModeOn }) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <Image style={styles.icon} source={contact.icon}></Image>
       </View>
       <View style={styles.contactInfoContainer}>
-        <Text style={styles.title}>{contact.name}</Text>
-        <Text style={styles.subtitle}>{contact.phone}</Text>
-        <Text style={styles.subtitle}>{contact.distance} miles away</Text>
+        <Text
+          style={[styles.title, { color: emergencyModeOn ? "white" : "black" }]}
+        >
+          {contact.name}
+        </Text>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: emergencyModeOn ? "white" : "black" },
+          ]}
+        >
+          {contact.phone}
+        </Text>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: emergencyModeOn ? "white" : "black" },
+          ]}
+        >
+          {contact.distance} miles away
+        </Text>
       </View>
     </View>
   );
