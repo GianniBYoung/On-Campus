@@ -6,6 +6,7 @@ const caf = require('./data/cafTimes.json');
 const lot = require('./data/lotTimes.json');
 import { Dimensions } from "react-native";
 import CollapsibleView from "@eliav2/react-native-collapsible-view";
+import { ProgressBar, Colors } from 'react-native-paper';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -92,6 +93,9 @@ function generateDataForBarChart(location) {
   };
   return data;
 }
+function roundToMult5(x) {
+  return Math.ceil(x / 5) * 5;
+}
 export default function CapacityScreen() {
 
   // Doane Orang is #FFA74C
@@ -139,6 +143,12 @@ export default function CapacityScreen() {
       backgroundColor: "#fff",
       paddingTop: 0,
       marginTop: 0
+    },
+    progressBar: {
+      marginTop: 10,
+      marginBottom: 5,
+      height: 10,
+      marginHorizontal: 20
     }
   });
   return (
@@ -146,8 +156,9 @@ export default function CapacityScreen() {
       <ScrollView style={styles.scrollView}>
         <Text style={styles.titleText} >
           Business of buildings around campus      </Text>
-        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity</Text>}>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity {roundToMult5(Math.round(getProgress('gym') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
+            <ProgressBar style={styles.progressBar} progress={getProgress('gym')} color={Colors.orange500} />
             <BarChart
               style={{
                 marginVertical: 8,
@@ -163,9 +174,11 @@ export default function CapacityScreen() {
             <Text>Above is the percentage full for the Gym both now and the expectation over the next four hours.</Text>
           </View>
         </CollapsibleView>
-        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity</Text>}>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity {roundToMult5(Math.round(getProgress('caf') * 100))}%</Text>}>
 
           <View style={styles.collapseBody}>
+            <ProgressBar style={styles.progressBar} progress={getProgress('caf')} color={Colors.orange500} />
+
             <BarChart
               style={{
                 marginVertical: 8,
@@ -182,8 +195,10 @@ export default function CapacityScreen() {
             <Text>Above is the percentage full for the Cafeteria both now and the expectation over the next four hours.</Text>
           </View>
         </CollapsibleView>
-        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity</Text>}>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity {roundToMult5(Math.round(getProgress('lot') * 100))}%</Text>}>
           <View style={styles.collapseBody}>
+            <ProgressBar style={styles.progressBar} progress={getProgress('lot')} color={Colors.orange500} />
+
             <BarChart
               style={{
                 marginVertical: 8,
