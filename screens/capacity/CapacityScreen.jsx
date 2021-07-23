@@ -90,6 +90,19 @@ function generateDataForBarChart(location) {
   };
   return data;
 }
+function getCapacityMessage(capacity){
+  if (capacity <=.20){
+    return 'Nearly Empty';
+  }else if (capacity <=.40){
+    return 'Not Busy';
+  }else if (capacity <=.60){
+    return 'Normal';
+  }else if (capacity <=.80){
+    return 'Busy';
+  }else{
+    return 'Crowded';
+  }
+}
 export default function CapacityScreen() {
 
   // Doane Orang is #FFA74C
