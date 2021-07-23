@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 const gym = require('./data/gymTimes.json');
 const caf = require('./data/cafTimes.json');
 const lot = require('./data/lotTimes.json');
 import { Dimensions } from "react-native";
+import CollapsibleView from "@eliav2/react-native-collapsible-view";
+import { ProgressBar, Colors } from 'react-native-paper';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -35,6 +37,7 @@ function getProgress(location) {
     return capacity;
   } else {
     let capacity = ((dataset.peopleAtTimes[0].weekends[time.getHours()][time.getHours().toString() + "00"]) / dataset.maxCapacity);
+    console.log('Capacity is: ' + capacity);
     return capacity;
 
   }
@@ -60,7 +63,7 @@ function generateDataForBarChart(location) {
   let dataValues = [];
   let datapoints = [];
   if (time.getDay() >= 1 && time.getDay() < 6) {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
 
       let currentHour24Format = ((time.getHours() + i).toString() + "00").padStart(4, '0');
       if (i > 0) {
@@ -70,7 +73,7 @@ function generateDataForBarChart(location) {
 
     }
   } else {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
       let currentHour24Format = ((time.getHours() + i).toString() + "00").padStart(4, '0');
       if (i > 0) {
         labelValues.push(currentHour24Format.substr(0, 2));
@@ -90,16 +93,19 @@ function generateDataForBarChart(location) {
   };
   return data;
 }
-function getCapacityMessage(capacity){
-  if (capacity <=.20){
+function roundToMult5(x) {
+  return Math.ceil(x / 5) * 5;
+}
+function getCapacityMessage(capacity) {
+  if (capacity <= .20) {
     return 'Nearly Empty';
-  }else if (capacity <=.40){
+  } else if (capacity <= .40) {
     return 'Not Busy';
-  }else if (capacity <=.60){
+  } else if (capacity <= .60) {
     return 'Normal';
-  }else if (capacity <=.80){
+  } else if (capacity <= .80) {
     return 'Busy';
-  }else{
+  } else {
     return 'Crowded';
   }
 }
@@ -111,22 +117,14 @@ export default function CapacityScreen() {
     backgroundGradientFrom: "#fb8c00",
     backgroundGradientTo: "#ffa726",
     backgroundGradientToOpacity: .6,
-    fillShadowGradient: 'black',
+    fillShadowGradient: '#ffffff',
     fillShadowGradientOpacity: 1,
     decimalPlaces: 0, // optional, defaults to 2dp
     color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
     strokeWidth: 1, // optional, default 3
     barPercentage: .8,
     useShadowColorFromDataset: false,// optional
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          min: 0,
-          max: 100
-        }
-      }]
-    }
+
 
   };
   const styles = StyleSheet.create({
@@ -137,63 +135,105 @@ export default function CapacityScreen() {
     scrollView: {
       backgroundColor: 'white',
       marginHorizontal: 5,
+
     },
     text: {
       fontSize: 42,
     },
+    titleText: {
+      fontSize: 20,
+      fontWeight: "bold"
+    },
+    collapsibleTitleText: {
+      fontSize: 18,
+      color: "#000000"
+    },
+    collapseHeader: {
+      backgroundColor: "#f09624",
+
+    },
+    collapseBody: {
+      backgroundColor: "#fff",
+      paddingTop: 0,
+      marginTop: 0
+    },
+    progressBar: {
+      marginTop: 10,
+      marginBottom: 5,
+      height: 10,
+      marginHorizontal: 20
+    }
   });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text>This is Capacity screen</Text>
-        <Text>Gym Capacity</Text>
-        <Progress.Bar progress={getProgress('gym')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} borderWidth={2} />
-        <BarChart
-          style={{
-            marginVertical: 8,
-          }}
-          data={generateDataForBarChart('gym')}
-          width={screenWidth}
-          height={220}
-          yAxisSuffix="%"
-          fromZero={true}
+        <Text style={styles.titleText} >
+          Business of buildings around campus      </Text>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Gym Capacity {roundToMult5(Math.round(getProgress('gym') * 100))}%</Text>}>
+          <View style={styles.collapseBody}>
+            <Text>The Gym is {getCapacityMessage(getProgress('gym'))}</Text>
+            <ProgressBar style={styles.progressBar} progress={getProgress('gym')} color={Colors.orange500} />
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('gym')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+            <Text>Above is the percentage full for the Gym both now and the expectation over the next four hours.</Text>
+          </View>
+        </CollapsibleView>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Cafeteria Capacity {roundToMult5(Math.round(getProgress('caf') * 100))}%</Text>}>
 
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        />
-        <Text>Cafeteria Capacity</Text>
-        <Progress.Bar progress={getProgress('caf')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} borderWidth={2} />
-        <BarChart
-          style={{
-            marginVertical: 8,
-          }}
-          data={generateDataForBarChart('caf')}
-          width={screenWidth}
-          height={220}
-          yAxisSuffix="%"
-          fromZero={true}
+          <View style={styles.collapseBody}>
+            <Text>The Cafeteria is {getCapacityMessage(getProgress('caf'))}</Text>
 
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        />
-        <Text>Parking Lot Capacity</Text>
-        <Progress.Bar progress={getProgress('lot')} width={screenWidth - 10}
-          color={'rgba(255, 167, 76, 1)'} borderColor={'black'} height={20} borderWidth={2} />
-        <BarChart
-          style={{
-            marginVertical: 8,
-          }}
-          data={generateDataForBarChart('lot')}
-          width={screenWidth}
-          height={220}
-          yAxisSuffix="%"
-          fromZero={true}
+            <ProgressBar style={styles.progressBar} progress={getProgress('caf')} color={Colors.orange500} />
 
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        />
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('caf')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
+
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+            <Text>Above is the percentage full for the Cafeteria both now and the expectation over the next four hours.</Text>
+          </View>
+        </CollapsibleView>
+        <CollapsibleView style={styles.collapseHeader} title={<Text style={styles.collapsibleTitleText}>Parking Lot Capacity {roundToMult5(Math.round(getProgress('lot') * 100))}%</Text>}>
+          <View style={styles.collapseBody}>
+            <Text>The Parking Lot is {getCapacityMessage(getProgress('lot'))}</Text>
+
+            <ProgressBar style={styles.progressBar} progress={getProgress('lot')} color={Colors.orange500} />
+
+            <BarChart
+              style={{
+                marginVertical: 8,
+              }}
+              data={generateDataForBarChart('lot')}
+              width={screenWidth}
+              height={220}
+              yAxisSuffix="%"
+              fromZero={true}
+
+              chartConfig={chartConfig}
+              verticalLabelRotation={30}
+            />
+
+            <Text>Above is the percentage of parking spots filled now and the expected amount over the next four hours.</Text>
+          </View>
+        </CollapsibleView>
       </ScrollView>
     </SafeAreaView>
   );
