@@ -13,7 +13,12 @@ import { Dimensions } from "react-native";
 export default function EmergencyContactItem({ contact, emergencyModeOn }) {
   return (
     <View style={styles.container}>
-      <View style={styles.iconContainer}>
+      <View
+        style={[
+          styles.iconContainer,
+          { backgroundColor: emergencyModeOn ? "#ff5630" : "#8dce19" },
+        ]}
+      >
         <Image style={styles.icon} source={contact.icon}></Image>
       </View>
       <View style={styles.contactInfoContainer}>
@@ -48,7 +53,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     flexDirection: "row",
     alignItems: "center",
-
     marginVertical: 15,
     paddingHorizontal: 15,
     paddingBottom: 5,
@@ -59,7 +63,6 @@ const styles = StyleSheet.create({
     borderRadius: 64,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ff5630",
   },
   icon: {
     width: 40,
