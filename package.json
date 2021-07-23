@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@eliav2/react-native-collapsible-view": "^1.4.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.4",
     "expo": "~42.0.1",
@@ -15,12 +16,17 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-chart-kit": "^6.11.0",
+    "react-native-collapsible": "^1.6.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-paper": "^4.9.2",
+    "react-native-progress": "^5.0.0",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
     "react-native-web": "~0.13.12",
-    "react-native-maps": "0.28.0"
+    "react-native-maps": "0.28.0",
+    "react-native-svg": "^12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
