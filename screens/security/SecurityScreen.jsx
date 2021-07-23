@@ -139,7 +139,7 @@ export default function SecurityScreen({ navigation }) {
           >
             {emergencyModeOn
               ? "All the contacts below have been alerted! "
-              : "When press the sos button, all the contacts below will be alerted"}
+              : "When you press the sos button, all the contacts below will be alerted"}
           </Text>
           {contacts.map((contact) => (
             <EmergencyContactItem
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     flexDirection: "column",
+    backgroundColor: "#8dce19",
   },
   appBar: {
     width: "100%",
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    margin: 30,
+    // margin: 30,
     marginTop: 60,
     color: "black",
     fontWeight: "bold",
@@ -199,11 +200,12 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     borderRadius: 256,
     marginBottom: 30,
+    marginTop: 30,
     alignItems: "center",
     justifyContent: "center",
   },
   sosText: {
-    fontSize: 30,
+    fontSize: 50,
     margin: 30,
     color: "#fff",
     fontWeight: "bold",
@@ -212,7 +214,6 @@ const styles = StyleSheet.create({
   contactsContainer: {
     width: "100%",
     elevation: 30,
-
     shadowOffset: { width: 0, height: 2 },
     shadowColor: "black",
     shadowOpacity: 1,
@@ -235,6 +236,8 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: 256,
+    height: 286,
+    position: "relative",
+    top: 30,
   },
 });
